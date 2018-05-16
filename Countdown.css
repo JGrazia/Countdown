@@ -1,60 +1,53 @@
-html, body
+html
 {
 	height: 100%;
 }
 
-*
-{
-	box-sizing: border-box;
-	font-family: 'Kavivanar', cursive;
-}
-
 body
 {
-	background-color: white;
+  	text-align: center;
+	background: #00ECB9;
+  	font-family: sans-serif;
+  	font-weight: 100;
+  	height: 100%;
 }
 
-#header
+h1
 {
-	height: 10%;
-	text-align: center;
-	font-size: 50px;
+	color: #396;
+  	font-weight: 100;
+  	font-size: 40px;
+  	margin: 40px 0px 20px;
 }
 
-#container
+#clockdiv
 {
-	height: 80%;
-	display: flex;
-	justify-content: center;
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
 }
 
-#cd
+#clockdiv > div
 {
-	background-color: #BEE3DB;
-	display: flex;
-	align-items: center;
-	align-self: center;
-	border-radius: 20px;
-	justify-content: center;
-	height: 30%;
-	width: 90%;
+    padding: 10px;
+    border-radius: 3px;
+    background: #00BF96;
+    display: inline-block;
 }
 
-.block
+#clockdiv div > span
 {
-	flex: 2;
-	background-color: #7785AC;
-	margin: auto;
-	display: flex;
-	justify-content: center;
-	height: 40%;
-	width: 50%;
-	border-radius: 20px;
-	flex-direction: column;
+    padding: 15px;
+    border-radius: 3px;
+    background: #00816A;
+    display: inline-block;
 }
 
-.pause
+.smalltext
 {
-	margin-top: 15px;
-	text-align: center;
+    padding-top: 5px;
+    font-size: 16px;
 }

@@ -1,85 +1,41 @@
-
-function compte_a_rebours()
-{
-    var compte_a_rebours = document.getElementById("cd");
-
-    var date_actuelle = new Date();
-    var date_evenement = new Date("May 18 00:00:00 2019");
-    var total_secondes = (date_evenement - date_actuelle) / 1000;
-
-    var prefixe = "Compte à rebours terminé dans ";
-    if (total_secondes < 0)
-    {
-        prefixe = "Compte à rebours terminé il y a ";
-        total_secondes = Math.abs(total_secondes);
-    }
-
-    if (total_secondes > 0)
-    {
-        var jours = Math.floor(total_secondes / (60 * 60 * 24));
-        var heures = Math.floor((total_secondes - (jours * 60 * 60 * 24)) / (60 * 60));
-        minutes = Math.floor((total_secondes - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
-        secondes = Math.floor(total_secondes - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
-
-        var et = "et";
-        var mot_jour = "jours,";
-        var mot_heure = "heures,";
-        var mot_minute = "minutes,";
-        var mot_seconde = "secondes";
-
-        if (jours == 0)
-        {
-            jours = '';
-            mot_jour = '';
-        }
-        else if (jours == 1)
-        {
-            mot_jour = "jour,";
-        }
-
-        if (heures == 0)
-        {
-            heures = '';
-            mot_heure = '';
-        }
-        else if (heures == 1)
-        {
-            mot_heure = "heure,";
-        }
-
-        if (minutes == 0)
-        {
-            minutes = '';
-            mot_minute = '';
-        }
-        else if (minutes == 1)
-        {
-            mot_minute = "minute,";
-        }
-
-        if (secondes == 0)
-        {
-            secondes = '';
-            mot_seconde = '';
-            et = '';
-        }
-        else if (secondes == 1)
-        {
-            mot_seconde = "seconde";
-        }
-
-        if (minutes == 0 && heures == 0 && jours == 0)
-        {
-            et = "";
-        }
-
-        compte_a_rebours.innerHTML = prefixe + jours + ' ' + mot_jour + ' ' + heures + ' ' + mot_heure + ' ' + minutes + ' ' + mot_minute + ' ' + et + ' ' + secondes + ' ' + mot_seconde;
-    }
-    else
-    {
-        compte_a_rebours.innerHTML = 'Compte à rebours terminé.';
-    }
-
-    var actualisation = setTimeout("compte_a_rebours();", 1000);
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
 }
-compte_a_rebours();
+
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
+}
+
+var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+initializeClock('clockdiv', deadline);
